@@ -7,7 +7,7 @@ import java.util.Scanner;
 
 public class Day6Part1 {
 
-    private static String FILE = "Day6/Day6Input";
+    private static String FILE = "Day6/Day6Input.txt";
     private enum Direction {NORTH, SOUTH, EAST, WEST};
     public static void main(String[] args) {
         List<char[]> grid = new ArrayList<>();
