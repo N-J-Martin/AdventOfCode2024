@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Day9Part1 {
-    private static String FILE = "Day9/Day9Sample.txt";
+    private static String FILE = "Day9/Day9Input.txt";
     public static void main(String[] args) {
         try (Scanner sc = new Scanner(new File(FILE))) {
             String line = sc.nextLine();
@@ -44,14 +44,15 @@ public class Day9Part1 {
         int i = 0;
         while (i < space.size()) {
             if (space.get(i).equals(".")) {
-                space.remove(i);
                 int removal = space.size() - 1;
                 while (removal > i && space.get(removal).equals(".")) {
                     removal--;
                 }
                 if (removal > i){
-                    space.add(i, space.get(removal));
-                    space.remove(removal+1);
+                    space.remove(i);
+                    space.add(i, space.get(removal-1));
+                    space.remove(removal);
+                    space.add(removal, ".");
                 }
 
             }
@@ -59,8 +60,8 @@ public class Day9Part1 {
         }
     }
 
-    private static int sum(List<String> space) {
-        int sum = 0;
+    private static long sum(List<String> space) {
+        long sum = 0;
         for (int i = 0; i < space.size(); i++) {
             if (!space.get(i).equals(".")){
                 sum = sum + (i * Integer.parseInt(space.get(i)));
