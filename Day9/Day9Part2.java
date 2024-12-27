@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Day9Part2 {
-    private static String FILE = "Day9/Day9Sample.txt";
+    private static String FILE = "Day9/Day9Input.txt";
     private static List<Integer> sizes = new ArrayList<>();
     public static void main(String[] args) {
         try (Scanner sc = new Scanner(new File(FILE))) {
@@ -40,17 +40,19 @@ public class Day9Part2 {
     }
 
     private static void defragment(List<String> space) {
-        for (int file: sizes) {
+        for (int file = 0; file < sizes.size(); file++) {
             boolean moved = false;
             int i = 0;
-            while (!moved && i < space.size()) {
+            //System.out.println(space.indexOf(String.valueOf(sizes.size() - file-1)));
+            int index = space.indexOf(String.valueOf(sizes.size() - file-1));
+            while (i < index && !moved && i < space.size()) {
                 if (space.get(i).equals(".")) {
                     int j = i;
                     while (j < space.size() && space.get(j).equals(".")) {
                         j++;
                     }
                     int max = j-i;
-                    if (max >= file) {
+                    if (max >= sizes.get(file)) {
                         sub(space, i, file);
                         moved = true;
                     }
@@ -60,17 +62,18 @@ public class Day9Part2 {
                 }
 
             }
+            System.out.println(sizes.size()-file-1);
         }
     }
 
     private static void sub(List<String> space, int i, int file) {
-        String val = String.valueOf(sizes.size() - sizes.indexOf(file) - 1);
-        for (int s = 0; s < file; s++) {
+        String val = String.valueOf(sizes.size() - file - 1);
+        for (int s = 0; s < sizes.get(file); s++) {
             int index = space.indexOf(val);
             space.remove(val);
             space.add(index, ".");
         }
-        for (int j = i; j < i + file; j++){
+        for (int j = i; j < i + sizes.get(file); j++){
             space.remove(j);
             space.add(j, val);
         }
